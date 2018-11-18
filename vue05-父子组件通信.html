@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件化之todoList和父组件向子组件传值</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model = "inputValue"/>
+        <button @click = "handleBtnClick">提交</button>
+        <ul>
+            <!-- 父组件传值给子组件， -->
+            <todo-item v-bind:content = "item" 
+            v-for="item in list">{{item}}</todo-item>
+        </ul>
+    </div>
+    <script>
+        // 全局组件
+        // Vue.component("TodoItem",{
+        //     props:['content'],
+        //     template:'<li>{{content}}</li>'
+        // })
+        // 局部组件
+        var TodoItem = {
+            // props接收外部传递过来的数据
+            props:['content'],
+            template:'<li>{{content}}</li>'
+        }
+        var app = new Vue({
+            el:'#app',
+            data:{
+                list:[],
+                inputValue:''
+            },
+            components:{
+                TodoItem
+            },
+            methods:{
+                handleBtnClick(){
+                    this.list.push(this.inputValue);
+                    this.inputValue = '';
+                }
+            }
+        })
+    </script>
+</body>
+</html>
