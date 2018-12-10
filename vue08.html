@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue中的样式绑定</title>
+  <style>
+      .activated{
+        color: red;
+        cursor: pointer;
+      }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 方法一：class的对象绑定 {activated : isActivated} 通过判断isActivated的true和false来决定要不要加class -->
+    <!-- <div id="app">
+      <div @click = "handleChangeColor"
+      :class = "{activated : isActivated}"
+      >hello world</div>
+    </div> -->
+
+
+    <!-- 方法二：class的数组绑定,acitvated是一个变量，数组里面可以写多个变量 -->
+    <!-- <div id="app">
+      <div @click = "handleChangeColor"
+      :class = "[activated]">
+        hello world
+      </div>
+    </div> -->
+
+    <!-- 方法三：通过style来加内联样式,可以用对象的形式，也可以用数组的形式 -->
+
+    <!-- 使用数组的形式为(数组里面是一个一个的对象，可以加入多个)：
+       :style="[styleObj,{fontSize:'20px'}]" -->
+    <div id="app">
+      <div @click = "handleChangeColor"
+      :style="styleObj">
+        hello world
+      </div>
+    </div>
+
+    <script>
+      var vm = new Vue({
+        el:'#app',
+        data:{
+          // 方法一
+          // isActivated:false,
+          // 方法二
+          // activated:''
+          // 方法三
+          styleObj: {
+            color: "black"
+          }
+        },
+        methods:{
+          handleChangeColor(){
+            // 方法一
+            // this.isActivated = !this.isActivated;
+
+            // 方法二 
+            // this.activated = this.activated === "activated" ? "" : "activated";
+
+            // 方法三
+            this.styleObj.color = this.styleObj.color === "black" ? "red" : "black"
+          }
+        }
+      })
+    </script>
+</body>
+</html>

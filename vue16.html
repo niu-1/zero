@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue中非父子组件的传值(vuex/(Bus/总线/发布-订阅模式/观察者模式))</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 复杂的组件之间传值 -->
+  <!-- 解决方法：vuex，发布-订阅模式（总线机制） -->
+  <div id="root">
+    <child content="li"></child>
+    <child content="yu"></child>
+  </div>
+  <script>
+    // vue中兄弟组件之间传参
+    Vue.prototype.bus = new Vue()
+
+    Vue.component('child',{
+      props:{
+        content:String
+      },
+      template:'<div @click="handleClick">{{selfContent}}</div>',
+      data(){
+        return {
+          selfContent:this.content
+        }
+      },
+      methods:{
+        handleClick(){
+          alert(this.selfContent);
+
+          this.bus.$emit('change',this.selfContent);
+        }
+      },
+      mounted() {
+        var _this = this;
+        this.bus.$on('change',function(msg){
+          // 此处每点击一次都会打印两次，在一个child组件中去触发事件时，在两个child组件中都进行了事件的监听
+          // console.log('msg',msg)
+          _this.selfContent = msg;
+          // alert(msg);
+        })
+      },
+    });
+    var vm = new Vue({
+      el:'#root'
+    })
+  </script>
+</body>
+</html>

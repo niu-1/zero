@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件参数校验与非props特性</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 了解！！！！ -->
+  <!-- props特性：父组件传，子组件接，子组件可以直接使用父组件传递过来的数据，不会将属性显示在dom标签中-->
+  <!-- 非props特性：父组件传，子组件不接，子组件无法使用父组件传递过来的数据，会将属性显示在dom标签中 -->
+    <div id="root">
+        <child :content=" '123' "> </child>
+    </div>
+    <script>
+      Vue.component('child',{
+        props:{
+          // content:[String,Number],
+          content:{
+            type:String,
+            required:false,
+            default:'default value',
+            // 要求通过父组件传入的内容，长度必须大于5
+            validator:function(value){
+              return (value.lenth > 5)
+            }
+          }
+        },
+        template:'<div>{{content}}</div>'
+      })
+      var vm = new Vue({
+        el:'#root',
+      })
+    </script>
+</body>
+</html>

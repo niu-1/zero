@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>父子组件传值</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 父组件通过属性的方式向子组件进行传递数据，子组件通过触发事件向父组件传值-->
+    <!-- 父组件向子组件传递count，子组件接收父组件传递过来的参数（单向数据流），子组件只能使用，不能改变 -->
+    <div id="app">
+      <counter :count="0" @number="handleIncrease"></counter>
+      <counter :count="1" @number="handleIncrease"></counter>
+      <div>{{total}}</div>
+    </div>
+
+    <script>
+      var counter = {
+        props:['count'],
+        template:'<div @click="handleBtnClick"> {{number}} </div>',
+        data(){
+          return{
+            number:this.count
+          }
+        },
+        methods:{
+          handleBtnClick(){
+            // 单向数据流，子组件不要改变父组件传递过来的数据
+            // 子组件要想实现功能，必须要修改父组件传过来的数据，解决办法就是子组件自己维护一个data
+            this.number = this.number + 2;
+            this.$emit("number",2)
+          }
+        },
+      }
+      var vm = new Vue({
+        el:'#app',
+        components: {
+          counter
+        },
+        data:{
+          total:1
+        },
+        methods:{
+          handleIncrease(step){
+            // alert("inc");
+            this.total += step;
+          }
+        }
+      })
+    </script>
+</body>
+</html>

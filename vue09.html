@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue的条件渲染</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 当show为false时，dom直接从文档中消除 -->
+        <!-- <div v-if="show">{{message}}</div> -->
+
+        <!-- v-if和v-else要配套紧靠着使用 -->
+        <!-- <div v-else>bye world</div> -->
+
+        <!-- 当show为true时，显示内容，为false时，隐藏内容，dom为display:none,并没有从文档中消除 -->
+        <!-- <div v-show="show">{{message}}</div> -->
+
+        <!-- <div v-if="isShow === 'a'">a</div>
+        <div v-else-if="isShow === 'b'">b</div>
+        <div v-else>c</div> -->
+
+        <!-- 没有给input加key时，改变show的值，用户名和邮箱名会来回转换，但是input框中的值没有改变 -->
+        <!-- vue在渲染页面时，会尽可能的复用页面上已经存在的dom
+          虚拟dom中的diff算法，给元素加了key值以后，vue知道两个元素不一样，就不会再复用 -->
+          <div v-if="show">
+            用户名：
+            <input type="text" key="userName"/>
+          </div>
+          <div v-else>
+            邮箱名：
+            <input type="text" key="passWord"/>
+          </div>
+    </div>
+    <script>
+        var vm = new Vue({
+          el:'#app',
+          data:{
+            message:"hello world",
+            show:false,
+            isShow:'a'
+          }
+        })
+    </script>
+</body>
+</html>

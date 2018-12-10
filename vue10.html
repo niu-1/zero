@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue中的列表渲染——数组的遍历(for in)、对象的遍历(for of)</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 这样循环时，外层会多嵌套一层div -->
+      <!-- <div v-for="item in list" :key="item.id">
+        <div>{{item.text}}</div>
+        <span>{{item.id}}</span>
+      </div> -->
+
+      <!-- 使用template作为占位符，最终并不会渲染到页面上 -->
+      <!-- <template v-for="item in list" :key="item.id">
+          <div>{{item.text}}</div>
+          <span>{{item.id}}</span>
+      </template> -->
+
+      <!-- 对对象的遍历，直接往对象里面添加值时(在console台里输入，vm.userInfo.address="beijing")，数据变了，页面没变 -->
+      <div v-for="(item,key,index) of userInfo">
+        {{item}}-----{{key}}+++++{{index}}
+      </div>
+  </div>
+  <script>  
+    // 修改数组的内容时，不能直接通过下标的方式，如果直接通过这种方法，最终是数据变了，但是页面并没有发生变化
+    // vue提供了几个数组遍历方法（数据改变，页面跟着变）来操作数组
+    // 数组方法有：pop（把数组最后一项删除掉）、push（）、shift、unshift、splice、sort、reverse
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        list:[{
+          id:01,
+          text:'hao'
+        },{
+          id:02,
+          text:'hao2'
+        }],
+        userInfo:{
+          name:'yuan',
+          age:'22'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

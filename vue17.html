@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>在vue中使用插槽</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 插槽的使用场景：子组件的一部分内容是根据父组件传递过来的DOM进行显示 -->
+    <div id="root">
+        <!-- <child> 
+          <p>hello</p>
+        </child> -->
+
+        <!-- 具名插槽:插槽是只有一个，具名插槽可以有多个 -->
+        <!-- <child >
+          <div slot="header"> header </div>
+          <div slot="footer"> footer </div>
+        </child> -->
+
+        <!-- 作用域插槽:父组件调用子组件时，给子组件传递了一个插槽，从子组件接收的数据都放在了props里（props这个变量可以自己定义） -->
+       <!-- 应用场景：子组件的dom结构由外部传递进来 -->
+        <child>
+          <!-- 固定写法-外层套template -->
+          <template slot-scope="props">
+              <li>{{props.item}}</li>
+          </template>
+        </child>
+    </div>
+    <script>
+      Vue.component('child',{
+        // props:['content'],
+        // slot内容就是父组件往子组件传递的DOM，slot插槽还可以定义默认值
+        // template:`<div>
+        //           <slot>默认内容</slot>
+        //           </div>`
+
+        // 具名插槽
+        // template:`<div>
+        //           <slot name="header">default</slot>
+        //           <div>content</div>
+        //           <slot name="footer"></slot>
+        //           </div>`
+
+        // 作用域插槽
+        data(){
+          return {
+            list:[1,2,3,4]
+          }
+        },
+        template:`<div>
+                    <ul>
+                        <slot v-for="item of list" :item = item>
+                        </slot>
+                    </ul>
+                  </div>`
+          
+      })
+      var vm = new Vue({
+        el:'#root'
+      })
+    </script>
+</body>
+</html>

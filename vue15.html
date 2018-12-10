@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>给组件绑定原生事件</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 什么时候需要给组件绑定原生事件？ -->
+    <div id="root">
+        <child @click.native="handleClick"></child>
+    </div>
+    <script>
+      Vue.component('child',{
+        template:'<div>child</div>'
+      })
+      var vm = new Vue({
+        el:'#root',
+        methods:{
+          handleClick(){
+            alert("click");
+          }
+        }
+      })
+    </script>
+</body>
+</html>

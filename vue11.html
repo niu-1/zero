@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue中的set方法</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <div v-for="item of userInfo">
+          {{item}}
+        </div> -->
+        <div v-for="item in list">
+          {{item}}
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+          el:'#app',
+          data:{
+            userInfo:{
+              name:'yuan',
+              age:'22'
+            },
+            list:[1,2,3,4]
+          }
+        })
+        // Vue.set(vm.userInfo,"address","beijing");
+        // vm.$set(vm.userInfo,"address","beijing");
+        Vue.set(vm.list,1,5)
+    </script>
+</body>
+</html>

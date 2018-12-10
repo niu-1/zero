@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性，方法和侦听器</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+      {{fullName}}
+      {{age}}
+      <!-- {{getFullName()}} -->
+    </div>
+    <script>
+      
+        var vm = new Vue({
+            el:'#root',
+            data:{
+              firstName:'li',
+              lastName:'yuan',
+              age:23,
+              // 使用watch时，添加的冗余变量
+              fullName:'li yuan',
+            },
+
+            // 重要属性，缓存机制，第一次的时候会进行执行
+            // computed: {
+            // // 计算属性fullName，依赖了两个属性firstName和lastName，当这两个属性没有变化时，计算属性不会执行
+            //   fullName(){
+            //     console.log('computed');
+            //     return this.firstName + ' ' + this.lastName;
+            //   }
+            // },
+            
+            // 页面只要重新渲染，就会重新执行一次，没有缓存机制
+            // methods: {
+            //   getFullName(){
+            //     console.log('methods');
+            //     return this.firstName + ' ' + this.lastName;
+            //   }
+            // },
+
+            // 刚进入页面时，渲染的是data里面的fullName，watch并没有执行，当监听的变量发生变化时，watch才会执行
+            // 和computed都可以实现缓存机制,
+            watch: {
+              firstName(){
+                console.log('watch firstName')
+                this.fullName = this.firstName + ' ' + this.lastName;
+              },
+              lastName(){
+                console.log('watch lastName')
+                this.fullName = this.firstName + ' ' + this.lastName;
+              }
+            }
+        })
+    </script>
+</body>
+</html>
